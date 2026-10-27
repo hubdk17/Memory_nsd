@@ -108,6 +108,48 @@ def per_subject_fraction(trials: pd.DataFrame) -> pd.DataFrame:
     return g
 
 
+def shape_controls(ctl_s: pd.DataFrame, ctl: pd.DataFrame):
+    """Present the decoder-independent estimates under the column names the figure
+    code expects, so every panel draws the corrected numbers rather than the
+    uncorrected ratio."""
+    subj = (ctl_s.rename(columns={"clip_transfer": "transfer",
+                                  "clip_ceiling": "ceiling",
+                                  "clip_frac": "frac",
+                                  "clip_ident_ceiling": "ident_ceiling",
+                                  "clip_ident_transfer": "ident_transfer"})
+            [["roi", "subject_id", "transfer", "ceiling", "frac",
+              "ident_ceiling", "ident_transfer"]].copy())
+    agg = (subj.groupby("roi", observed=True)
+           .agg(transfer=("transfer", "mean"), ceiling=("ceiling", "mean"))
+           .reset_index())
+    by_roi = (ctl.rename(columns={"clip_frac": "frac_of_ceiling",
+                                  "clip_frac_sem": "sem",
+                                  "clip_ident_ceiling": "ident_ceiling",
+                                  "clip_ident_transfer": "ident_transfer"})
+              .merge(agg, on="roi"))
+    return subj, by_roi
+
+
+def validate_controls(subj: pd.DataFrame, by_roi: pd.DataFrame) -> None:
+    """Recompute the per-region summary from per-participant values and compare."""
+    print("=== validating corrected summary against per-participant values ===")
+    rec = (subj.groupby("roi", observed=True)
+           .agg(frac=("frac", "mean"), sem=("frac", lambda x: stats.sem(x, ddof=1)),
+                n=("frac", "size")).reset_index())
+    m = rec.merge(by_roi, on="roi", suffixes=("_rec", "_file"))
+    if len(m) != len(by_roi):
+        problems.append(f"roi merge lost rows: {len(m)} vs {len(by_roi)}")
+    for a, b, lab in (("frac", "frac_of_ceiling", "frac"),
+                      ("sem_rec", "sem_file", "sem")):
+        d = float(np.abs(m[a] - m[b]).max())
+        if d > TOL:
+            problems.append(f"{lab}: max abs diff {d:.3e} exceeds {TOL:g}")
+        print(f"  {lab:9s} max|recomputed - stored| = {d:.3e}")
+    if not (m["n"] == 8).all():
+        problems.append(f"expected 8 subjects per roi, got {sorted(m['n'].unique())}")
+    print(f"  subjects per roi: {sorted(m['n'].unique())}   regions: {len(m)}")
+
+
 def validate(trials: pd.DataFrame, by_roi: pd.DataFrame) -> pd.DataFrame:
     """Recompute the stored per-region summary from trial level and compare."""
     print("=== validating summary against trial-level data ===")
@@ -142,9 +184,9 @@ def check_contrasts(subj: pd.DataFrame) -> dict:
     """Recompute the paired V1 contrasts quoted in the Results."""
     print("\n=== validating paired contrasts quoted in the text ===")
     wide = subj.pivot(index="subject_id", columns="roi", values="frac")
-    quoted = {"S_ventral": (0.218, 17.19, 5.5e-7),
-              "PPA": (0.196, 10.72, 1.4e-5),
-              "FFA": (0.196, 11.10, 1.1e-5)}
+    quoted = {"S_ventral": (0.113, 7.29, 1.6e-4),
+              "PPA": (0.089, 18.06, 3.9e-7),
+              "FFA": (0.091, 5.07, 1.5e-3)}
     out = {}
     for roi, (d_q, t_q, p_q) in quoted.items():
         d = wide[roi] - wide["V1"]
@@ -290,8 +332,8 @@ def fig3(by_roi: pd.DataFrame, geom: pd.DataFrame) -> dict:
     print(f"  n regions {len(m)}")
     print(f"  Spearman rho = {rho:.3f}, p = {p_rho:.3f}")
     print(f"  Pearson   r  = {r:.3f}, p = {p_r:.3f}")
-    for nm, val, q in (("rho", rho, 0.556), ("p_rho", p_rho, 0.025),
-                       ("r", r, 0.350), ("p_r", p_r, 0.18)):
+    for nm, val, q in (("rho", rho, 0.588), ("p_rho", p_rho, 0.017),
+                       ("r", r, 0.494), ("p_r", p_r, 0.052)):
         if abs(val - q) > 0.006:
             problems.append(f"cross-method {nm} recomputed {val:.4f}, "
                             f"manuscript says {q}")
@@ -474,22 +516,27 @@ def fig5(trials: pd.DataFrame, by_roi: pd.DataFrame) -> pd.DataFrame:
     print(f"  regions below the 0.55 criterion: {below or 'none'}")
     if below:
         problems.append(f"regions below identification criterion: {below}")
-    for nm, got, want in (("min ident", agg["ic"].min(), 0.675),
-                          ("max ident", agg["ic"].max(), 0.962)):
+    for nm, got, want in (("min ident", agg["ic"].min(), 0.667),
+                          ("max ident", agg["ic"].max(), 0.950)):
         if abs(got - want) > 6e-4:
             problems.append(f"{nm} recomputed {got:.4f}, manuscript says {want}")
     v1 = agg.set_index("roi").loc["V1"]
     print(f"  V1 within {v1['ic']:.3f} vs cross {v1['it']:.3f} "
           f"(gap {v1['gap']:.3f}, largest = {agg['gap'].max():.3f} in "
           f"{DISP[agg.loc[agg.gap.idxmax(), 'roi']]})")
-    for nm, got, want in (("V1 within ident", v1["ic"], 0.837),
-                          ("V1 cross ident", v1["it"], 0.756)):
+    for nm, got, want in (("V1 within ident", v1["ic"], 0.793),
+                          ("V1 cross ident", v1["it"], 0.749)):
         if abs(got - want) > 6e-4:
             problems.append(f"{nm} recomputed {got:.4f}, manuscript says {want}")
-    if agg.loc[agg.gap.idxmax(), "roi"] != "V1":
-        problems.append("manuscript claims V1 has the widest within/cross "
-                        f"identification gap, but it is "
-                        f"{agg.loc[agg.gap.idxmax(), 'roi']}")
+    # The manuscript's claim is that the gap tracks transfer, not that any one
+    # region holds the maximum: V1 and V2 are separated by less than 0.002.
+    gf = agg.merge(by_roi[["roi", "frac_of_ceiling"]], on="roi")
+    r_gap, _ = stats.pearsonr(gf["gap"], gf["frac_of_ceiling"])
+    print(f"  gap vs transfer across regions: r = {r_gap:.3f} "
+          f"(widest gap in {DISP[agg.loc[agg.gap.idxmax(), 'roi']]})")
+    if r_gap > -0.90:
+        problems.append("manuscript claims the identification gap is largest where "
+                        f"transfer is lowest, but r = {r_gap:.3f}")
 
     order = by_roi.sort_values("frac_of_ceiling")["roi"].tolist()
     agg = agg.set_index("roi").loc[order].reset_index()
@@ -533,18 +580,20 @@ def fig5(trials: pd.DataFrame, by_roi: pd.DataFrame) -> pd.DataFrame:
 # ---------------------------------------------------------------- main
 def main() -> int:
     print("loading result tables ...")
-    trials = pd.read_csv(RESULTS / "brain_embedding_loso.csv")
-    by_roi = pd.read_csv(RESULTS / "brain_embedding_loso_by_roi.csv")
     by_cat = pd.read_csv(RESULTS / "brain_embedding_loso_by_category.csv")
     geom = pd.read_csv(RESULTS / "intersubject_mapping_breakdown_summary.csv")
-    print(f"  trials {trials.shape}, by_roi {by_roi.shape}, "
+    ctl = pd.read_csv(RESULTS / "decoder_controls_by_roi.csv")
+    ctl_s = pd.read_csv(RESULTS / "decoder_controls_by_subject.csv")
+    print(f"  controls by_roi {ctl.shape}, by_subject {ctl_s.shape}, "
           f"by_cat {by_cat.shape}, geometry {geom.shape}")
+
+    subj, by_roi = shape_controls(ctl_s, ctl)
 
     unknown = sorted(set(by_roi["roi"]) - set(ROI_META))
     if unknown:
         problems.append(f"regions with no display metadata: {unknown}")
 
-    subj = validate(trials, by_roi)
+    validate_controls(subj, by_roi)
     contrasts = check_contrasts(subj)
 
     print("\n=== drawing figures ===")
@@ -552,7 +601,7 @@ def main() -> int:
     fig2(subj, contrasts)
     cm = fig3(by_roi, geom)
     piv = fig4(by_cat, by_roi)
-    ident = fig5(trials, by_roi)
+    ident = fig5(subj, by_roi)
 
     # Machine-readable companions to the figures, for the tables in the manuscript.
     piv.round(4).to_csv(FIGDIR / "table_category_by_roi.csv")

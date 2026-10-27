@@ -23,7 +23,7 @@ REQUIRED_SECTIONS = [
     r"\section{Discussion}",
     r"\section*{Acknowledgments}",
     r"\section*{Funding}",
-    r"\section*{Conflict of Interest}",
+    r"\section*{Declaration of Competing Interest}",
     r"\section*{Data Availability}",
     r"\section*{Author Contributions}",
 ]

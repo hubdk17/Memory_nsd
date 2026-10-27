@@ -122,14 +122,13 @@ comparison to succeed. Distinguishing them requires an explicit noise ceiling
 inter-subject representational similarity reports raw alignment without one.
 
 The question is not whether brains differ. Individual differences in functional
-organisation are large, stable and measurable, whether indexed by connectivity
-fingerprints that identify a person across sessions \citep{finn2015}, by the
-areal layout of a densely sampled individual \citep{laumann2015,wang2015}, or by
-the finding that stable individual factors dominate day-to-day variation in
-functional networks \citep{gratton2018}. What is unsettled is where in the visual
-hierarchy those differences reside in the \emph{content} of a representation, as
-opposed to its spatial arrangement, and how to measure that without mistaking
-unreliability for individuality \citep{dubois2016,seghier2018}.
+organisation are large and stable, whether indexed by connectivity fingerprints
+that identify a person across sessions \citep{finn2015}, by the areal layout
+of a densely sampled individual \citep{laumann2015,wang2015}, or by the
+dominance of stable individual factors over day-to-day variation \citep{gratton2018}.
+What is unsettled is where those differences reside in the \emph{content} of a
+representation rather than its spatial arrangement, and how to measure that
+without mistaking unreliability for individuality \citep{dubois2016,seghier2018}.
 
 Representational similarity analysis \citep{kriegeskorte2008} provides a natural
 vocabulary for this question, since representational dissimilarity matrices are
@@ -407,16 +406,22 @@ are completely shared.
 \subsection{Transfer in the common embedding space}
 
 All sixteen regions with usable decoders cleared the identification criterion
-(within-participant identification \num{0.675}--\num{0.962}; chance \num{0.5};
+(within-participant identification \num{0.667}--\num{0.950}; chance \num{0.5};
 Figure~\ref{fig:ident}A) and all showed transfer far above zero (all
 $p < 10^{-6}$; Table~\ref{tab:main}).
 
+Every transfer figure we report is the decoder-independent estimate, in which the
+ceiling is built from two decoders trained on disjoint halves of a participant's
+images (Section~\ref{sec:controls}). The uncorrected ratio, which shares a
+decoder between numerator and denominator, is given beside it in
+Table~\ref{tab:controls} and is systematically higher.
+
 The fraction of a participant's own decodable representation recoverable from the
-other seven increased with distance from primary visual cortex (V1: \num{0.715};
-V2: \num{0.750}; V3: \num{0.829}; hV4: \num{0.833}), continuing through
-mid-level streams (\num{0.859}--\num{0.861}) and scene- and face-selective
-cortex (\num{0.893}--\num{0.911}) to ventral stream (\num{0.933};
-Figure~\ref{fig:gradient}, Table~\ref{tab:main}).
+other seven was lowest in V1 and V2 (\num{0.835} and \num{0.834}), intermediate
+in V3, hV4 and the mid-level streams (\num{0.864}--\num{0.884}), and highest in
+scene- and face-selective cortex (\num{0.904}--\num{0.926}) and in lateral and
+ventral stream (\num{0.948}; Figure~\ref{fig:gradient},
+Table~\ref{tab:main}).
 
 Because the 16 regions overlap and are nested, and mix dorsal with ventral
 areas, a group-mean ranking over all of them does not test a hierarchy. We
@@ -424,11 +429,11 @@ therefore pre-specified one ordered ventral sequence (V1 $\rightarrow$ V2
 $\rightarrow$ V3 $\rightarrow$ hV4 $\rightarrow$ mid-ventral $\rightarrow$
 ventral stream) and fitted a linear slope per participant across its six
 positions. The slope was positive in 8 of 8 participants (mean
-\num{0.041} per step, $t(7) = 14.67$, $p = 1.6\times10^{-6}$, $d_z = 5.19$). The
-increase is therefore reliable but not strictly monotonic: no participant's
-sequence is ordered without a single inversion (mean Kendall
-$\tau = \num{0.783}$, $t(7) = 11.80$, $p = 7.1\times10^{-6}$), most often hV4
-falling below V3. We describe the sequence as rising, not as monotonic.
+\num{0.020} per step, $t(7) = 6.62$, $p = 3.0\times10^{-4}$, $d_z = 2.34$). The
+increase is reliable but far from monotonic: not one participant's sequence is
+ordered without an inversion (mean Kendall $\tau = \num{0.533}$,
+$t(7) = 6.38$, $p = 3.7\times10^{-4}$), most often V2 falling below V1 or hV4
+below V3. We describe the sequence as rising, not as monotonic.
 
 The ordering is not an artefact of differing signal quality: the same gradient is
 present in the raw transfer cosines and in the ceilings separately
@@ -436,8 +441,9 @@ present in the raw transfer cosines and in the ceilings separately
 dataset. Nor does it track region size: voxel counts differ by a factor of 30 but
 correlate only weakly with transfer ($r = \num{0.358}$, $p = 0.174$ on
 $\log_{10}$ voxels), and hV4, the smallest region we analyse (\num{498} voxels),
-transfers at \num{0.833}, well above V1 (\num{1130} voxels, \num{0.715}). A
-direct subsampling control is reported below.
+transfers at \num{0.864}, above V1 (\num{1130} voxels, \num{0.835}), while
+ventral stream is the largest region at \num{7844} voxels. A direct subsampling
+control is reported below.
 The number of scanning sessions, which varies from 30 to 40 between participants,
 is also not responsible: it is a between-participant quantity and cannot generate
 a difference between regions within a participant, and across participants it is
@@ -446,8 +452,8 @@ if anything negatively related to mean transfer ($r = -0.641$, $p = 0.087$).
 \begin{figure}[tb]
 \centering
 \includegraphics[width=\textwidth]{fig1_gradient.pdf}
-\caption{\textbf{Representational transfer between brains increases along the
-cortical hierarchy.}
+\caption{\textbf{Representational transfer between brains is lowest in early
+visual cortex for a semantic read-out.}
 \textbf{(A)} For each region, the fraction of a participant's own decodable
 representation that is recoverable from the other seven participants. Large
 symbols are the group mean with standard error over the 8 participants; small
@@ -457,21 +463,30 @@ fully shared code. Colour denotes hierarchical tier.
 cross-participant transfer (filled) and within-participant ceiling (open), both
 as mean-centred cosine similarity. Regions differ widely in absolute signal, yet
 the ordering in panel A does not follow that of the ceiling; V1 is neither
-the noisiest nor the weakest region, but it is the least transferable.
+the noisiest nor the weakest region, yet it sits with V2 at the bottom of the
+transfer ranking.
 Region order is identical in both panels.}
 \label{fig:gradient}
 \end{figure}
 
-Within-participant contrasts against V1 were large and consistent
-(Table~\ref{tab:contrast}). Ventral stream exceeded V1 by
-$\Delta = \num{0.218}$ ($t(7) = 17.19$, $p = 5.5\times10^{-7}$,
-$q = 4.2\times10^{-6}$), and every one of the eight participants showed the
-effect in the same direction (Figure~\ref{fig:paired}A). All 15 contrasts against
-V1 survived Benjamini--Hochberg correction, 14 of them at $q < 0.01$. The sole
-marginal comparison is V2 versus V1 ($\Delta = \num{0.035}$, $t(7) = 2.45$,
-$q = 0.044$, 6 of 8 participants), which is expected given that V1 and V2 are
-adjacent in the hierarchy and is the one step in the gradient we would not claim
-on this evidence alone.
+Within-participant contrasts against V1 separate the coarse comparison from the
+fine one (Table~\ref{tab:contrast}). Ventral stream exceeded V1 by
+$\Delta = \num{0.113}$ ($t(7) = 7.29$, $p = 1.6\times10^{-4}$,
+$q = 8.2\times10^{-4}$) in 8 of 8 participants (Figure~\ref{fig:paired}A), and 9
+of the 15 contrasts survived Benjamini--Hochberg correction. The six that did not
+are the informative ones: V1 is not reliably distinguishable from V2
+($\Delta = -\num{0.001}$, $q = 0.964$), V3 ($\Delta = \num{0.044}$,
+$q = 0.338$), hV4 ($\Delta = \num{0.030}$, $q = 0.453$), mid-lateral stream,
+retrosplenial cortex or parahippocampal cortex. Pooling the early regions
+(V1, V2, V3) against the high-level ones (FFA, PPA, OPA, RSC and ventral stream)
+does give a reliable difference (\num{0.849} versus \num{0.924},
+$\Delta = \num{0.075}$, $t(7) = 4.29$, $p = 0.004$, 8 of 8 participants).
+
+What survives the decoder-independent ceiling is therefore a coarse
+early-versus-high-level difference rather than a step-by-step progression. Once
+the ceiling no longer shares a decoder with the quantity it bounds, neighbouring
+regions are no longer separable, and we do not claim an ordering among V1, V2, V3
+and hV4.
 
 Individual participants vary considerably in the absolute level of transfer, and
 in the least reliable regions the per-participant estimates are noisy
@@ -496,6 +511,7 @@ of two noise estimates and justifying treating that region as unstable throughou
 \end{figure}
 
 \subsection{What the gradient depends on}
+\label{sec:controls}
 
 Three controls were applied to the pre-specified ventral sequence, each reported
 whatever its outcome. All use the split-half ceiling, so the numerator and
@@ -510,14 +526,15 @@ in mid-ventral cortex when the two sides are given independent decoders. The
 gradient therefore shrinks by about half. The shared fraction rises from
 \num{0.835} in V1 to \num{0.948} in ventral stream, a gap of \num{0.113} against
 \num{0.218} uncorrected ($t(7) = 7.29$, $p = 1.6\times10^{-4}$, $d_z = 2.58$, 8
-of 8 participants), and the per-participant slope falls from \num{0.055} to
-\num{0.028} per step ($t(7) = 7.32$, $p = 1.6\times10^{-4}$). The effect is
+of 8 participants), and the slope across the pre-specified sequence falls from
+\num{0.041} to \num{0.020} per step ($t(7) = 6.62$, $p = 3.0\times10^{-4}$,
+positive in 8 of 8). The effect is
 smaller than we first measured but it is not an artefact of the ceiling.
 
 \emph{Region size does not explain it.} Subsampling every region to the smallest
 region's voxel count for that participant leaves the gap essentially intact
-(\num{0.093}, $t(7) = 2.94$, $p = 0.022$, $d_z = 1.04$; slope \num{0.025} per
-step, positive in 8 of 8). Matching for size costs little beyond the ceiling
+(\num{0.093}, $t(7) = 2.94$, $p = 0.022$, $d_z = 1.04$; slope \num{0.019} per
+step, $p = 0.019$, positive in 7 of 8). Matching for size costs little beyond the ceiling
 correction itself.
 
 \emph{The gradient is specific to a semantic target.} Repeating the analysis with
@@ -525,7 +542,7 @@ a GIST descriptor in place of the CLIP embedding removes it. The shared fraction
 is \num{0.889} in V1, \num{0.893} in V2, \num{0.842} in hV4, \num{0.837} in
 mid-ventral cortex and \num{0.883} in ventral stream: a V1-to-ventral gap of
 $-\num{0.006}$ ($t(7) = -0.15$, $p = 0.89$, positive in 3 of 8 participants) and
-a slope indistinguishable from zero ($-\num{0.007}$ per step, $p = 0.48$). This
+a slope indistinguishable from zero ($-\num{0.007}$ per step, $p = 0.34$). This
 is an informative null rather than a failure to detect. The \SI{95}{\percent}
 confidence interval on the GIST gap, $[-\num{0.100}, +\num{0.088}]$, excludes the
 semantic gap of \num{0.113}, and two one-sided tests against that bound support
@@ -539,6 +556,22 @@ disagree most about how shared the representation is. The region-by-target
 interaction is reliable (\num{0.119}, $t(7) = 3.02$, $p = 0.020$, same sign in 7
 of 8 participants).
 
+These results are not confined to the pre-specified sequence. Pooling the early
+regions (V1, V2, V3) against the high-level ones (FFA, PPA, OPA, RSC and ventral
+stream) across all 16 regions reproduces the same pattern: the gap is
+\num{0.075} for the semantic target ($t(7) = 4.29$, $p = 0.004$, 8 of 8
+participants) and \num{0.080} under voxel matching ($t(7) = 4.91$, $p = 0.002$),
+but $-\num{0.009}$ for the low-level target ($t(7) = -0.64$, $p = 0.54$, 4 of 8),
+with a reliable interaction ($t(7) = 3.05$, $p = 0.019$).
+
+One objection deserves a direct answer: that the GIST analysis is simply a
+blunter instrument. It is not. Across the 16 regions the GIST fractions span
+\num{0.815}--\num{0.974} against \num{0.834}--\num{0.959} for CLIP, and the
+within-participant standard deviation across regions is no smaller for GIST than
+for CLIP (\num{0.091} versus \num{0.070}, $t(7) = -1.18$, $p = 0.278$). The
+low-level read-out varies between regions as much as the semantic one. What it
+does not do is vary along the hierarchy.
+
 Taken together, the hierarchy gradient we set out to measure holds for semantic
 content and does not hold for low-level content in the same voxels. We therefore
 report it as a property of the semantic read-out rather than of the cortical
@@ -546,20 +579,28 @@ hierarchy as such.
 
 \subsection{Convergence between measures}
 
-The two measures agree in rank ordering (Spearman $\rho = 0.556$, $p = 0.025$
-across 16 regions) but not in magnitude (Pearson $r = 0.350$, $p = 0.183$;
-Figure~\ref{fig:cross}). The agreement is carried by the ends of the ranking.
-Both place ventral stream among the most shared regions, and both place V1 and V2
-in the lower half, but neither the geometry measure nor the decoding measure puts
+The two measures agree in rank ordering (Spearman $\rho = \num{0.588}$,
+$p = 0.017$ across 16 regions) and weakly in magnitude (Pearson
+$r = \num{0.494}$, $p = 0.052$; Figure~\ref{fig:cross}). The agreement is carried
+by the ends of the ranking. Both place ventral stream among the most shared
+regions, and both place V1 and V2 in the lower half, but neither measure puts
 early visual cortex lowest overall: by geometry V1 ranks sixth of 16 from the
 bottom, behind hV4 (\num{0.611}), mid-ventral (\num{0.653}), parietal
 (\num{0.660}) and mid-lateral stream (\num{0.702}). Excluding parahippocampal
 cortex, whose reliability is lowest and whose estimate is the largest single
-disagreement, rank agreement rises to $\rho = \num{0.746}$ ($p = 0.001$, 15
-regions). Several intermediate regions diverge substantially
-(e.g., hV4 is \num{0.833} by decoding but \num{0.611} by geometry). We therefore
-treat the \emph{ordering} as the replicated result and do not claim quantitative
-agreement between the two measures.
+disagreement, rank agreement rises to $\rho = \num{0.786}$
+($p = 5.0\times10^{-4}$, 15 regions). Several intermediate regions still diverge
+(hV4 is \num{0.864} by decoding but \num{0.611} by geometry). We therefore treat
+the \emph{ordering} as the replicated result and do not claim quantitative
+agreement.
+
+The geometry measure uses no decoder and no target feature space, which makes one
+further comparison available. It agrees with the semantic read-out
+($\rho = \num{0.786}$ excluding parahippocampal cortex) better than with the
+low-level one ($\rho = \num{0.500}$, $p = 0.058$). We note this because it is the
+only evidence we have that bears on which read-out is the more representative,
+and it is weak evidence: the two correlations are not formally compared, and 15
+regions cannot settle the question.
 
 \begin{figure}[tb]
 \centering
@@ -580,18 +621,14 @@ reliability under both measures.}
 \subsection{Dependence on image category}
 
 Transfer in V1 varied across COCO supercategories \citep{lin2014} over a wider
-range than transfer in ventral stream (V1 range \num{0.625}--\num{0.803}, span
-\num{0.178}; ventral stream \num{0.886}--\num{0.966}, span \num{0.079};
-Figure~\ref{fig:category}, Table~\ref{tab:category}). In V1, images of food
-(\num{0.803}) and vehicles (\num{0.799}) transferred best while furniture
-(\num{0.625}) and kitchen objects (\num{0.655}) transferred worst.
-
-This difference in span is not interpretable. The span of a set of category means
-grows with the noise in those means, and V1 has both the lowest transfer and the
-smallest categories (15 images for \emph{sports}). A null built by permuting the
-image-to-category assignment 500 times produces a V1-to-ventral span ratio
-\emph{larger} than the one observed (observed \num{2.24}, null mean \num{2.77},
-$p = 0.641$). We draw no inference from the category results.
+range than transfer in ventral stream (span \num{0.178} against \num{0.079};
+Figure~\ref{fig:category}, Table~\ref{tab:category}), food transferring best in
+V1 and furniture worst. This is not interpretable. The span of a set of category
+means grows with the noise in those means, and V1 has both the lowest transfer
+and the smallest categories (15 images for \emph{sports}); a null built by
+permuting the image-to-category assignment 500 times produces a V1-to-ventral
+span ratio \emph{larger} than the one observed (\num{2.24} against a null mean of
+\num{2.77}, $p = 0.641$). We draw no inference from the category results.
 
 \begin{figure}[tb]
 \centering
@@ -614,17 +651,16 @@ its category sensitivity and we draw no inference from it.}
 
 \subsection{The same result on an identification scale}
 
-On an identification scale the gradient is not driven by regions differing in how
+On an identification scale the pattern is not driven by regions differing in how
 much stimulus information they carry. Accuracy from a participant's own decoder
-was high throughout (\num{0.675}--\num{0.962}), and the within- minus
-cross-participant gap is largest where transfer is lowest: \num{0.081} in V1
-against \num{0.016} in ventral stream (Figure~\ref{fig:ident}B), and likewise
-\num{0.044} against \num{0.014} under the split-half decoders. V1's
-stimulus-specific information is decodable within a participant; less of it
-generalises. This is a rescaling of the same quantity, not independent evidence
---- the gap and the transfer ratio correlate at $r = -\num{0.993}$ across the 16
-regions --- and we report it only because identification has a known chance level
-and no dependence on the centring convention.
+was high throughout (\num{0.667}--\num{0.950}), and the within- minus
+cross-participant gap tracks transfer closely across regions ($r = -\num{0.981}$),
+being widest in V2 and V1 (\num{0.046} and \num{0.044}) and narrowest in
+ventral stream (\num{0.014}; Figure~\ref{fig:ident}B): V1's
+stimulus-specific information is decodable within a participant, but less of it
+generalises. This is a rescaling of the same quantity rather than independent
+evidence, and we report it only because identification has a known chance
+level.
 
 \begin{figure}[tb]
 \centering
@@ -662,10 +698,12 @@ estimate as unstable and exclude it from the interpretation.
 \centering
 \caption{\textbf{Shared representation by region, both measures.} \emph{Transfer}
 is the decoding-based fraction of the within-participant ceiling, with its
-standard error over the 8 participants. \emph{Ident.\ within} and \emph{Ident.\
-cross} are two-way identification accuracy (chance \num{0.5}) from a
-participant's own decoder and, averaged over the seven other participants, from
-each of their decoders in turn. \emph{Shared} is
+standard error over the 8 participants; the ceiling is the decoder-independent
+one, so numerator and denominator never share a decoder
+(Section~\ref{sec:controls}). \emph{Ident.\ within} and \emph{Ident.\ cross} are
+two-way identification accuracy (chance \num{0.5}) from a participant's own
+half-trained decoder and, averaged over the seven other participants, from each
+of their decoders in turn. \emph{Shared} is
 the geometry-based fraction of Equation~\ref{eq:shared} with its standard error,
 and the final column tests it against 1 (a fully shared code); it is not reported
 for parahippocampal cortex, whose within-participant RDM reliability falls below
@@ -678,55 +716,95 @@ the threshold at which the ratio is meaningful. Regions are ordered by transfer.
 \cmidrule(lr){2-5}\cmidrule(lr){6-8}
 Region & Transfer & SEM & Ident.\ within & Ident.\ cross & Shared & SEM & $p$ vs.\ 1 \\
 \midrule
-Ventral stream      & \num{0.933} & \num{0.020} & \num{0.927} & \num{0.911} & \num{0.971} & \num{0.103} & 0.786 \\
-Lateral stream      & \num{0.930} & \num{0.029} & \num{0.889} & \num{0.872} & \num{0.872} & \num{0.107} & 0.275 \\
-nsdgeneral          & \num{0.923} & \num{0.016} & \num{0.962} & \num{0.949} & \num{0.954} & \num{0.092} & 0.630 \\
-Parahippocampal     & \num{0.920} & \num{0.056} & \num{0.675} & \num{0.658} & \num{0.531} & \num{0.279} & --- \\
-FFA                 & \num{0.911} & \num{0.012} & \num{0.858} & \num{0.834} & \num{0.888} & \num{0.071} & 0.157 \\
-PPA                 & \num{0.910} & \num{0.019} & \num{0.868} & \num{0.843} & \num{0.909} & \num{0.082} & 0.304 \\
-OPA                 & \num{0.907} & \num{0.029} & \num{0.881} & \num{0.856} & \num{0.856} & \num{0.104} & 0.209 \\
-Parietal stream     & \num{0.897} & \num{0.029} & \num{0.852} & \num{0.823} & \num{0.660} & \num{0.083} & 0.009 \\
-RSC                 & \num{0.893} & \num{0.046} & \num{0.728} & \num{0.703} & \num{0.849} & \num{0.133} & 0.302 \\
-Mid-lateral stream  & \num{0.861} & \num{0.032} & \num{0.851} & \num{0.811} & \num{0.702} & \num{0.127} & 0.051 \\
-Mid-ventral stream  & \num{0.859} & \num{0.020} & \num{0.870} & \num{0.833} & \num{0.653} & \num{0.088} & 0.005 \\
-Early stream        & \num{0.834} & \num{0.027} & \num{0.885} & \num{0.839} & \num{0.844} & \num{0.100} & 0.162 \\
-hV4                 & \num{0.833} & \num{0.029} & \num{0.821} & \num{0.776} & \num{0.611} & \num{0.065} & $5.6\times10^{-4}$ \\
-V3                  & \num{0.829} & \num{0.036} & \num{0.843} & \num{0.793} & \num{0.758} & \num{0.087} & 0.027 \\
-V2                  & \num{0.750} & \num{0.024} & \num{0.833} & \num{0.762} & \num{0.746} & \num{0.060} & 0.004 \\
-V1                  & \num{0.715} & \num{0.021} & \num{0.837} & \num{0.756} & \num{0.733} & \num{0.062} & 0.003 \\
+nsdgeneral          & \num{0.959} & \num{0.019} & \num{0.950} & \num{0.942} & \num{0.954} & \num{0.092} & 0.630 \\
+Lateral stream      & \num{0.948} & \num{0.032} & \num{0.877} & \num{0.862} & \num{0.872} & \num{0.107} & 0.275 \\
+Ventral stream      & \num{0.948} & \num{0.021} & \num{0.917} & \num{0.903} & \num{0.971} & \num{0.103} & 0.786 \\
+Parahippocampal     & \num{0.934} & \num{0.068} & \num{0.667} & \num{0.651} & \num{0.531} & \num{0.279} & --- \\
+FFA                 & \num{0.926} & \num{0.016} & \num{0.848} & \num{0.826} & \num{0.888} & \num{0.071} & 0.157 \\
+PPA                 & \num{0.924} & \num{0.021} & \num{0.856} & \num{0.833} & \num{0.909} & \num{0.082} & 0.304 \\
+OPA                 & \num{0.919} & \num{0.014} & \num{0.867} & \num{0.844} & \num{0.856} & \num{0.104} & 0.209 \\
+Parietal stream     & \num{0.916} & \num{0.032} & \num{0.836} & \num{0.811} & \num{0.660} & \num{0.083} & 0.009 \\
+RSC                 & \num{0.904} & \num{0.048} & \num{0.718} & \num{0.695} & \num{0.849} & \num{0.133} & 0.302 \\
+Early stream        & \num{0.903} & \num{0.036} & \num{0.855} & \num{0.826} & \num{0.844} & \num{0.100} & 0.162 \\
+Mid-ventral stream  & \num{0.884} & \num{0.031} & \num{0.856} & \num{0.823} & \num{0.653} & \num{0.088} & 0.005 \\
+Mid-lateral stream  & \num{0.882} & \num{0.044} & \num{0.836} & \num{0.801} & \num{0.702} & \num{0.127} & 0.051 \\
+V3                  & \num{0.879} & \num{0.051} & \num{0.819} & \num{0.782} & \num{0.758} & \num{0.087} & 0.027 \\
+hV4                 & \num{0.864} & \num{0.038} & \num{0.802} & \num{0.765} & \num{0.611} & \num{0.065} & $5.6\times10^{-4}$ \\
+V1                  & \num{0.835} & \num{0.023} & \num{0.793} & \num{0.749} & \num{0.733} & \num{0.062} & 0.003 \\
+V2                  & \num{0.834} & \num{0.032} & \num{0.799} & \num{0.753} & \num{0.746} & \num{0.060} & 0.004 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[tb]
 \centering
-\caption{\textbf{Every region transfers better than V1.} Paired contrasts of each
-region against V1 across the 8 participants. $\Delta$ is the mean
-within-participant difference in fraction of ceiling; $q$ is the
-Benjamini--Hochberg adjusted $p$-value across the 15 contrasts; the final column
-counts participants showing the effect in the positive direction. Only the V2
-contrast is marginal, as expected for regions adjacent in the hierarchy.}
+\caption{\textbf{V1 differs from high-level regions, but not from its
+neighbours.} Paired contrasts of each region against V1 across the 8
+participants. $\Delta$ is the mean within-participant difference in fraction of
+ceiling; $q$ is the Benjamini--Hochberg adjusted $p$-value across the 15
+contrasts; the final column counts participants showing the effect in the
+positive direction. Nine of the 15 contrasts survive correction. The six that do
+not include V2, V3 and hV4 --- the regions adjacent to V1 --- so the effect is a
+coarse early-versus-high-level difference and not a step-by-step gradient.}
 \label{tab:contrast}
 \small
 \begin{tabular}{lccccc}
 \toprule
 Region vs.\ V1 & $\Delta$ & $t(7)$ & $p$ & $q$ (BH) & Participants \\
 \midrule
-Ventral stream      & \num{0.218} & 17.19 & $5.5\times10^{-7}$ & $4.2\times10^{-6}$ & 8/8 \\
-Lateral stream      & \num{0.216} & 10.09 & $2.0\times10^{-5}$ & $4.3\times10^{-5}$ & 8/8 \\
-nsdgeneral          & \num{0.208} & 18.27 & $3.6\times10^{-7}$ & $4.2\times10^{-6}$ & 8/8 \\
-Parahippocampal     & \num{0.205} & 5.40 & 0.001 & 0.001 & 8/8 \\
-FFA                 & \num{0.196} & 11.10 & $1.1\times10^{-5}$ & $4.3\times10^{-5}$ & 8/8 \\
-PPA                 & \num{0.196} & 10.72 & $1.4\times10^{-5}$ & $4.3\times10^{-5}$ & 8/8 \\
-OPA                 & \num{0.192} & 9.83 & $2.4\times10^{-5}$ & $4.5\times10^{-5}$ & 8/8 \\
-Parietal stream     & \num{0.182} & 10.52 & $1.5\times10^{-5}$ & $4.3\times10^{-5}$ & 8/8 \\
-RSC                 & \num{0.178} & 6.07 & $5.1\times10^{-4}$ & $6.9\times10^{-4}$ & 8/8 \\
-Mid-lateral stream  & \num{0.146} & 6.18 & $4.6\times10^{-4}$ & $6.8\times10^{-4}$ & 8/8 \\
-Mid-ventral stream  & \num{0.144} & 8.68 & $5.4\times10^{-5}$ & $9.0\times10^{-5}$ & 8/8 \\
-Early stream        & \num{0.119} & 10.34 & $1.7\times10^{-5}$ & $4.3\times10^{-5}$ & 8/8 \\
-hV4                 & \num{0.118} & 5.37 & 0.001 & 0.001 & 8/8 \\
-V3                  & \num{0.114} & 4.78 & 0.002 & 0.002 & 8/8 \\
-V2                  & \num{0.035} & 2.45 & 0.044 & 0.044 & 6/8 \\
+nsdgeneral          & \num{0.124} & 8.89 & $4.6\times10^{-5}$ & $3.5\times10^{-4}$ & 8/8 \\
+Lateral stream      & \num{0.113} & 3.95 & 0.006 & 0.012 & 8/8 \\
+Ventral stream      & \num{0.113} & 7.29 & $1.6\times10^{-4}$ & $8.2\times10^{-4}$ & 8/8 \\
+Parahippocampal     & \num{0.099} & 1.59 & 0.156 & 0.213 & 6/8 \\
+FFA                 & \num{0.091} & 5.07 & 0.001 & 0.005 & 8/8 \\
+PPA                 & \num{0.089} & 18.06 & $3.9\times10^{-7}$ & $5.9\times10^{-6}$ & 8/8 \\
+OPA                 & \num{0.084} & 4.68 & 0.002 & 0.007 & 8/8 \\
+Parietal stream     & \num{0.081} & 3.76 & 0.007 & 0.013 & 8/8 \\
+RSC                 & \num{0.069} & 1.93 & 0.095 & 0.143 & 6/8 \\
+Early stream        & \num{0.069} & 3.24 & 0.014 & 0.024 & 7/8 \\
+Mid-ventral stream  & \num{0.049} & 4.34 & 0.003 & 0.008 & 7/8 \\
+Mid-lateral stream  & \num{0.048} & 1.37 & 0.214 & 0.267 & 4/8 \\
+V3                  & \num{0.044} & 1.14 & 0.293 & 0.338 & 5/8 \\
+hV4                 & \num{0.030} & 0.85 & 0.423 & 0.453 & 4/8 \\
+V2                  & \num{-0.001} & -0.05 & 0.964 & 0.964 & 6/8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[tb]
+\centering
+\caption{\textbf{The three control analyses, by region.} \emph{Uncorrected} is
+the ratio in which one decoder supplies both numerator and denominator.
+\emph{Corrected} replaces the ceiling with one built from two decoders trained on
+disjoint halves of that participant's images, and is the estimate used
+throughout the paper. \emph{GIST} repeats the corrected analysis with a
+512-dimensional low-level descriptor in place of the CLIP embedding.
+\emph{Matched} repeats it with every region subsampled to the smallest analysed
+region's voxel count for that participant. Correction raises every region, and
+raises early visual cortex most; the GIST column does not rise along the
+hierarchy. Regions are ordered as in Table~\ref{tab:main}.}
+\label{tab:controls}
+\small
+\begin{tabular}{lccccc}
+\toprule
+Region & Voxels & Uncorrected & Corrected & GIST & Matched \\
+\midrule
+nsdgeneral          & 14549 & \num{0.923} & \num{0.959} & \num{0.934} & \num{0.941} \\
+Lateral stream      & 7639 & \num{0.930} & \num{0.948} & \num{0.903} & \num{0.938} \\
+Ventral stream      & 7844 & \num{0.933} & \num{0.948} & \num{0.883} & \num{0.932} \\
+Parahippocampal     & 652 & \num{0.920} & \num{0.934} & \num{0.974} & \num{0.925} \\
+FFA                 & 890 & \num{0.911} & \num{0.926} & \num{0.850} & \num{0.919} \\
+PPA                 & 1072 & \num{0.910} & \num{0.924} & \num{0.885} & \num{0.919} \\
+OPA                 & 1337 & \num{0.907} & \num{0.919} & \num{0.860} & \num{0.917} \\
+Parietal stream     & 3274 & \num{0.897} & \num{0.916} & \num{0.873} & \num{0.902} \\
+RSC                 & 767 & \num{0.893} & \num{0.904} & \num{0.904} & \num{0.892} \\
+Early stream        & 4905 & \num{0.834} & \num{0.903} & \num{0.916} & \num{0.844} \\
+Mid-ventral stream  & 922 & \num{0.859} & \num{0.884} & \num{0.837} & \num{0.873} \\
+Mid-lateral stream  & 758 & \num{0.861} & \num{0.882} & \num{0.815} & \num{0.876} \\
+V3                  & 970 & \num{0.829} & \num{0.879} & \num{0.874} & \num{0.858} \\
+hV4                 & 498 & \num{0.833} & \num{0.864} & \num{0.842} & \num{0.863} \\
+V1                  & 1130 & \num{0.715} & \num{0.835} & \num{0.889} & \num{0.839} \\
+V2                  & 1099 & \num{0.750} & \num{0.834} & \num{0.893} & \num{0.810} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -734,7 +812,9 @@ V2                  & \num{0.035} & 2.45 & 0.044 & 0.044 & 6/8 \\
 \begin{table}[tb]
 \centering
 \caption{\textbf{Category dependence of transfer by region.} The weakest and
-strongest COCO supercategory for each region and the span between them. The span
+strongest COCO supercategory for each region and the span between them, computed
+on the uncorrected ratio because the category analysis is reported descriptively
+and supports no inference. The span
 is largest in early visual cortex and smallest in high-level and face-selective
 cortex. The parahippocampal row is reported for completeness only: its maximum
 exceeds 1, which is not physically interpretable and marks that estimate as
@@ -745,22 +825,22 @@ noise-dominated. Regions are ordered as in Table~\ref{tab:main}.}
 \toprule
 Region & Lowest & Category & Highest & Category & Span \\
 \midrule
-Ventral stream      & \num{0.886} & accessory & \num{0.966} & appliance & \num{0.079} \\
-Lateral stream      & \num{0.914} & accessory & \num{0.988} & electronic & \num{0.074} \\
 nsdgeneral          & \num{0.876} & accessory & \num{0.949} & food & \num{0.073} \\
+Lateral stream      & \num{0.914} & accessory & \num{0.988} & electronic & \num{0.074} \\
+Ventral stream      & \num{0.886} & accessory & \num{0.966} & appliance & \num{0.079} \\
 Parahippocampal     & \num{0.892} & person & \num{1.170} & outdoor & \num{0.278} \\
 FFA                 & \num{0.886} & vehicle & \num{0.958} & appliance & \num{0.072} \\
 PPA                 & \num{0.879} & accessory & \num{0.956} & food & \num{0.077} \\
 OPA                 & \num{0.845} & accessory & \num{0.958} & electronic & \num{0.112} \\
 Parietal stream     & \num{0.818} & accessory & \num{0.958} & food & \num{0.140} \\
 RSC                 & \num{0.800} & outdoor & \num{0.981} & appliance & \num{0.181} \\
-Mid-lateral stream  & \num{0.776} & accessory & \num{0.939} & sports & \num{0.162} \\
-Mid-ventral stream  & \num{0.808} & accessory & \num{0.925} & appliance & \num{0.117} \\
 Early stream        & \num{0.781} & accessory & \num{0.899} & food & \num{0.119} \\
-hV4                 & \num{0.791} & animal & \num{0.905} & sports & \num{0.114} \\
+Mid-ventral stream  & \num{0.808} & accessory & \num{0.925} & appliance & \num{0.117} \\
+Mid-lateral stream  & \num{0.776} & accessory & \num{0.939} & sports & \num{0.162} \\
 V3                  & \num{0.778} & accessory & \num{0.902} & food & \num{0.124} \\
-V2                  & \num{0.687} & animal & \num{0.852} & food & \num{0.165} \\
+hV4                 & \num{0.791} & animal & \num{0.905} & sports & \num{0.114} \\
 V1                  & \num{0.625} & furniture & \num{0.803} & food & \num{0.178} \\
+V2                  & \num{0.687} & animal & \num{0.852} & food & \num{0.165} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -848,16 +928,9 @@ still encoding which image is which in a way that does not transfer. Our result
 should be read as a claim about stimulus-specific representational content only,
 and we would not expect it to generalise to those other indices.
 
-We had expected the category analysis to bear on this, and report that it does
-not. V1's transfer does vary over a wider range across image categories than
-ventral stream's, but a permutation null shows that noise alone produces a span
-ratio at least as large (observed \num{2.24}, null mean \num{2.77},
-$p = 0.641$), because the span of a set of means grows with their noise and V1 is
-the noisiest case. The within-V1 ordering, where food and vehicles transfer best
-while furniture and kitchen objects transfer worst, is a description we report
-rather than explain. With 12 categories, some holding as few as 15 images, and 8
-participants, we do not have the power to model which image property drives it,
-and we draw no conclusion from the category results.
+We had expected the category analysis to bear on this and report that it does
+not: the wider spread of V1's transfer across image categories does not survive
+its own permutation null, so we draw no conclusion from it.
 
 Two aspects of our approach bear on the wider literature. First, inter-subject
 representational alignment is bounded by within-subject reliability, and
@@ -881,35 +954,27 @@ The sample is eight participants. This is the entire Natural Scenes Dataset and
 the within-participant contrasts are large, but it remains eight brains and one
 dataset, and we have not replicated in an independent cohort.
 
-The two measures agree in ordering but not in magnitude. We regard the ordering
-as established and the specific values as method-dependent.
-
 Medial temporal and hippocampal regions cannot be assessed here. Their
-reliability is at floor, and we emphasise that this is a statement about the
-measurement, not about those structures.
+reliability is at floor, and this is a statement about the measurement, not about
+those structures.
 
-The common space is a CLIP image embedding. A representation that two brains
-encode similarly but that CLIP does not represent would appear as individual
-under our decoding measure. The geometry-based measure does not share this
-assumption, and the two agree in ordering, which partially mitigates the concern.
+The common space is not a neutral instrument but part of the measurement, and our
+results demonstrate this rather than merely conceding it: changing the target
+feature space removes the gradient entirely. We therefore do not treat any
+single ordering of regions as the result. What we report is the conjunction
+--- a gradient for semantic features, none for low-level ones, and a reliable
+interaction between them --- and we would expect further feature spaces to
+yield orderings of their own. Which space is appropriate for a given region is
+a question this design does not answer, and a region's shared fraction is not
+simply predicted by how well the target suits it: across the ten
+region-by-target cells, the split-half ceiling and the shared fraction are
+uncorrelated within participants ($r = \num{0.034}$, $p = 0.72$). A
+representation that two brains encode similarly but that neither target
+represents would appear as individual under either read-out.
 
 We have not tested the retinotopic explanation directly. Doing so would require
 relating each participant's transfer deficit in V1 to their own measured visual
-field map, which the dataset supports and which we regard as the natural next
-experiment.
-
-The common space is not a neutral instrument but part of the measurement, and
-our own results demonstrate this rather than merely conceding it: changing the
-target feature space removes the gradient entirely. We therefore do not treat any
-single ordering of regions as the result. What we report is the conjunction --- a
-gradient for semantic features, none for low-level ones, and a reliable
-interaction between the two --- and we would expect further feature spaces to
-yield orderings of their own. Which space is the appropriate one for a given
-region is a separate question that this design does not answer, and we note that
-a region's shared fraction is not simply predicted by how well the target suits
-it: across the ten region-by-target cells, the split-half ceiling and the shared
-fraction are uncorrelated within participants ($r = 
-um{0.034}$, $p = 0.72$).
+field map, which the dataset supports and which is the natural next experiment.
 
 Finally, combining seven participants by averaging assumes each contributes
 equally. A fitted combination could recover more and would test whether

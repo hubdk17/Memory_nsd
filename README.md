@@ -82,8 +82,28 @@ ratio.
 | CLIP, voxel-count matched | 0.839 | 0.932 | **+0.093** (p = 0.022) |
 
 The gradient holds for semantic content and is **absent** for low-level content
-in the same voxels (region × target interaction p = 0.020). Where visual
-representation is individual depends on the feature space it is measured in.
+in the same voxels (region × target interaction p = 0.020). Equivalence testing
+rules out a semantic-sized gradient for the low-level target, and this is not
+weaker decoding: GIST identification *exceeds* CLIP in V1 (0.875 vs 0.793).
+
+The same pattern holds across all 16 regions, not just the ventral sequence.
+Pooling early regions (V1, V2, V3) against high-level ones (FFA, PPA, OPA, RSC,
+ventral stream):
+
+| | early | high-level | gap | |
+|---|---|---|---|---|
+| semantic (CLIP) | 0.849 | 0.924 | +0.075 | p = 0.004, 8/8 |
+| low-level (GIST) | 0.885 | 0.876 | −0.009 | p = 0.54, 4/8 |
+| CLIP, voxel-matched | 0.836 | 0.916 | +0.080 | p = 0.002, 8/8 |
+
+Where visual representation is individual depends on the feature space it is
+measured in.
+
+A caution for anyone reusing these numbers: under the decoder-independent
+ceiling, V1 is **not** reliably distinguishable from V2, V3 or hV4 (q = 0.96,
+0.34, 0.45). Nine of the fifteen contrasts against V1 survive correction. What
+the data support is a coarse early-versus-high-level difference, not a
+step-by-step hierarchy.
 
 Two methodological points worth reusing independently:
 
@@ -136,11 +156,17 @@ resolved against Crossref separately.
 
 ## Status
 
-Manuscript in preparation. `results/decoder_controls_by_subject.csv` is being
-extended from the pre-specified ventral sequence to all 16 regions; the five
-regions of that sequence (V1, V2, hV4, mid-ventral, ventral stream) are complete
-and are what the numbers above rest on. See `results/step42_control_stats.txt`
-for the full statistics.
+Manuscript in preparation. The control analyses are **complete** for all 16
+regions and 8 participants (128 region × participant cells, 6.5 h of CPU):
+
+- `results/decoder_controls_by_subject.csv` — per participant, per region
+- `results/decoder_controls_by_roi.csv` — region summaries
+- `results/step42_control_stats.txt` — the full statistics behind every number
+  quoted above
+- `results/step42_region_means.csv` — the three controls side by side
+
+Every table and figure in the manuscript is generated from these files and
+checked against the typeset text by `manuscript/check_tex.py`.
 
 ## Licence
 

@@ -1,134 +1,90 @@
-rois=['S_midventral', 'S_ventral', 'V1', 'V2', 'hV4']  subjects=['subj01', 'subj02', 'subj03', 'subj04', 'subj05', 'subj06', 'subj07', 'subj08']
-
-================================================================================================
-REGION MEANS (sd over participants)
-================================================================================================
-measure                                        V1             V2            hV4   S_midventral      S_ventral
-naive (published, step38)             0.715(0.061)    0.750(0.067)    0.833(0.082)    0.859(0.056)    0.933(0.056)
-split-half, CLIP target               0.835(0.064)    0.834(0.090)    0.864(0.106)    0.884(0.087)    0.948(0.061)
-naive ceiling, GIST target            0.871(0.063)    0.879(0.052)    0.829(0.083)    0.825(0.054)    0.859(0.088)
-split-half, GIST target               0.889(0.077)    0.893(0.071)    0.842(0.091)    0.837(0.064)    0.883(0.113)
-split-half + voxel-matched, CLIP      0.839(0.068)    0.810(0.031)    0.863(0.106)    0.873(0.114)    0.932(0.092)
-
-================================================================================================
-V1 vs S_ventral, PAIRED (n=8)
-================================================================================================
-naive (published, step38)          gap=+0.2182  t(7)=+17.191  p=5.53e-07  dz=+6.08  8/8 positive
-split-half, CLIP target            gap=+0.1129  t(7)= +7.294  p=1.64e-04  dz=+2.58  8/8 positive
-naive ceiling, GIST target         gap=-0.0128  t(7)= -0.461  p=6.59e-01  dz=-0.16  2/8 positive
-split-half, GIST target            gap=-0.0058  t(7)= -0.146  p=8.88e-01  dz=-0.05  3/8 positive
-split-half + voxel-matched, CLIP   gap=+0.0932  t(7)= +2.938  p=2.18e-02  dz=+1.04  7/8 positive
-
-================================================================================================
-ORDERED-SEQUENCE SLOPE across V1->V2->hV4->midventral->ventral (per participant)
-================================================================================================
-naive (published, step38)          slope=+0.0545/step  t(7)=+16.620  p=6.98e-07  dz=+5.88  8/8 pos  tau=+0.875  strictly-monotonic=4/8
-split-half, CLIP target            slope=+0.0276/step  t(7)= +7.319  p=1.60e-04  dz=+2.59  8/8 pos  tau=+0.600  strictly-monotonic=1/8
-naive ceiling, GIST target         slope=-0.0080/step  t(7)= -1.233  p=2.57e-01  dz=-0.44  2/8 pos  tau=-0.350  strictly-monotonic=0/8
-split-half, GIST target            slope=-0.0068/step  t(7)= -0.745  p=4.80e-01  dz=-0.26  3/8 pos  tau=-0.275  strictly-monotonic=0/8
-split-half + voxel-matched, CLIP   slope=+0.0250/step  t(7)= +3.196  p=1.51e-02  dz=+1.13  8/8 pos  tau=+0.300  strictly-monotonic=0/8
-
-================================================================================================
-HOW MUCH OF THE PUBLISHED GAP SURVIVES EACH CONTROL
-================================================================================================
-split-half, CLIP target            gap +0.1129 =  51.8% of published +0.2182
-naive ceiling, GIST target         gap -0.0128 =  -5.9% of published +0.2182
-split-half, GIST target            gap -0.0058 =  -2.7% of published +0.2182
-split-half + voxel-matched, CLIP   gap +0.0932 =  42.7% of published +0.2182
-
-================================================================================================
-CEILING INFLATION: naive ceiling minus split-half ceiling, CLIP (per region)
-================================================================================================
-  V1             ceiling 0.363 -> 0.282 (infl +0.081)   transfer 0.258 -> 0.234 (+0.024)
-  V2             ceiling 0.369 -> 0.303 (infl +0.066)   transfer 0.275 -> 0.249 (+0.025)
-  hV4            ceiling 0.383 -> 0.322 (infl +0.060)   transfer 0.314 -> 0.272 (+0.042)
-  S_midventral   ceiling 0.470 -> 0.441 (infl +0.029)   transfer 0.401 -> 0.384 (+0.017)
-  S_ventral      ceiling 0.536 -> 0.488 (infl +0.049)   transfer 0.498 -> 0.459 (+0.039)
-
-================================================================================================
-DOES THE CLIP AND GIST GRADIENT AGREE?  per-participant V1-vs-ventral gap
-================================================================================================
-  CLIP gap per subj: [0.07  0.1   0.065 0.152 0.114 0.171 0.071 0.161]
-  GIST gap per subj: [-0.042  0.075 -0.079 -0.024  0.063 -0.158 -0.079  0.198]
-  CLIP gap vs GIST gap: t(7)=+3.015 p=1.95e-02
-  GIST gap vs 0: mean=-0.0058 t(7)=-0.146 p=0.888  3/8 positive
+16 regions x 8 participants = 128 rows
+pre-specified sequence (6 positions): V1 -> V2 -> V3 -> hV4 -> S_midventral -> S_ventral
 
 ====================================================================================================
-ABSOLUTE SCALE. Two-way identification accuracy (chance = 0.5), split-half decoders.
-If GIST identification from ventral is at chance, its ratio is uninformative there.
+1. SEQUENCE MEANS (sd over participants)
 ====================================================================================================
-roi             CLIP id ceil  CLIP id xfer |  GIST id ceil  GIST id xfer
-V1                     0.793         0.749 |         0.875         0.841
-V2                     0.799         0.753 |         0.865         0.833
-hV4                    0.802         0.765 |         0.785         0.744
-S_midventral           0.856         0.823 |         0.819         0.774
-S_ventral              0.917         0.903 |         0.826         0.792
-
-Is each identification accuracy above chance? one-sample t vs 0.5 (n=8)
-  clip_ident_ceiling     V1=0.793*  V2=0.799*  hV4=0.802*  S_midventral=0.856*  S_ventral=0.917*
-  clip_ident_transfer    V1=0.749*  V2=0.753*  hV4=0.765*  S_midventral=0.823*  S_ventral=0.903*
-  gist_ident_ceiling     V1=0.875*  V2=0.865*  hV4=0.785*  S_midventral=0.819*  S_ventral=0.826*
-  gist_ident_transfer    V1=0.841*  V2=0.833*  hV4=0.744*  S_midventral=0.774*  S_ventral=0.792*
+measure                                   V1            V2            V3           hV4  S_midventral     S_ventral
+naive (as published)             0.715(0.061)   0.750(0.067)   0.829(0.102)   0.833(0.082)   0.859(0.056)   0.933(0.056)
+split-half, CLIP                 0.835(0.064)   0.834(0.090)   0.879(0.145)   0.864(0.106)   0.884(0.087)   0.948(0.061)
+naive ceiling, GIST              0.871(0.063)   0.879(0.052)   0.859(0.073)   0.829(0.083)   0.825(0.054)   0.859(0.088)
+split-half, GIST                 0.889(0.077)   0.893(0.071)   0.874(0.098)   0.842(0.091)   0.837(0.064)   0.883(0.113)
+split-half + voxel-matched       0.839(0.068)   0.810(0.031)   0.858(0.100)   0.863(0.106)   0.873(0.114)   0.932(0.092)
 
 ====================================================================================================
-RAW COSINES, split-half (ceiling and transfer are the ratio's two parts)
+2. V1 vs S_ventral, paired (n=8)
 ====================================================================================================
-roi             CLIP ceil  CLIP xfer  CLIP frac |  GIST ceil  GIST xfer  GIST frac
-V1                  0.282      0.234      0.835 |      0.525      0.462      0.889
-V2                  0.303      0.249      0.834 |      0.505      0.447      0.893
-hV4                 0.322      0.272      0.864 |      0.380      0.315      0.842
-S_midventral        0.441      0.384      0.884 |      0.426      0.354      0.837
-S_ventral           0.488      0.459      0.948 |      0.440      0.381      0.883
-
-Is the split-half CEILING itself above zero? (does decoding work at all?)  t vs 0, n=8
-  clip_ceiling   V1=0.282(p=1.4e-08)  V2=0.303(p=3.8e-07)  hV4=0.322(p=4.7e-06)  S_midventral=0.441(p=1.0e-06)  S_ventral=0.488(p=6.2e-08)
-  gist_ceiling   V1=0.525(p=1.4e-07)  V2=0.505(p=1.1e-07)  hV4=0.380(p=6.8e-07)  S_midventral=0.426(p=4.2e-08)  S_ventral=0.440(p=1.3e-06)
+  naive (as published)           gap=+0.2182  t(7)=+17.191  p=5.53e-07  dz=+6.08  8/8
+  split-half, CLIP               gap=+0.1129  t(7)= +7.294  p=1.64e-04  dz=+2.58  8/8
+  naive ceiling, GIST            gap=-0.0128  t(7)= -0.461  p=6.59e-01  dz=-0.16  2/8
+  split-half, GIST               gap=-0.0058  t(7)= -0.146  p=8.88e-01  dz=-0.05  3/8
+  split-half + voxel-matched     gap=+0.0932  t(7)= +2.938  p=2.18e-02  dz=+1.04  7/8
 
 ====================================================================================================
-WHICH TARGET SUITS WHICH REGION? split-half ceiling, CLIP vs GIST, paired per region
+3. PRE-SPECIFIED ORDERED SLOPE across the 6 positions (per participant)
 ====================================================================================================
-  V1             ceiling CLIP 0.282 vs GIST 0.525 t(7)= -8.86 p=0.000 | ident CLIP 0.793 vs GIST 0.875 t(7)= -8.38 p=0.000
-  V2             ceiling CLIP 0.303 vs GIST 0.505 t(7)= -6.36 p=0.000 | ident CLIP 0.799 vs GIST 0.865 t(7)= -4.49 p=0.003
-  hV4            ceiling CLIP 0.322 vs GIST 0.380 t(7)= -3.05 p=0.019 | ident CLIP 0.802 vs GIST 0.785 t(7)= +1.43 p=0.196
-  S_midventral   ceiling CLIP 0.441 vs GIST 0.426 t(7)= +0.60 p=0.565 | ident CLIP 0.856 vs GIST 0.819 t(7)= +2.64 p=0.033
-  S_ventral      ceiling CLIP 0.488 vs GIST 0.440 t(7)= +1.93 p=0.095 | ident CLIP 0.917 vs GIST 0.826 t(7)=+10.61 p=0.000
+  naive (as published)           slope=+0.0406/step  t(7)=+14.672  p=1.63e-06  dz=+5.19  8/8
+                                 tau=+0.783 (t(7)=+11.80, p=7.1e-06)  strictly monotonic: 2/8
+  split-half, CLIP               slope=+0.0200/step  t(7)= +6.618  p=2.99e-04  dz=+2.34  8/8
+                                 tau=+0.533 (t(7)=+6.38, p=3.7e-04)  strictly monotonic: 0/8
+  naive ceiling, GIST            slope=-0.0073/step  t(7)= -1.595  p=1.55e-01  dz=-0.56  2/8
+                                 tau=-0.350 (t(7)=-2.21, p=6.3e-02)  strictly monotonic: 0/8
+  split-half, GIST               slope=-0.0066/step  t(7)= -1.022  p=3.41e-01  dz=-0.36  3/8
+                                 tau=-0.233 (t(7)=-1.51, p=1.8e-01)  strictly monotonic: 0/8
+  split-half + voxel-matched     slope=+0.0189/step  t(7)= +3.046  p=1.87e-02  dz=+1.08  7/8
+                                 tau=+0.333 (t(7)=+3.54, p=9.5e-03)  strictly monotonic: 0/8
 
 ====================================================================================================
-EQUIVALENCE TEST on the GIST gradient: is it absent, or merely underpowered?
+4. EQUIVALENCE: is the GIST sequence effect absent or underpowered?
 ====================================================================================================
-  GIST V1->ventral gap  mean=-0.0058  95% CI [-0.0997, +0.0881]  sd=0.1123
-  CLIP V1->ventral gap  mean=+0.1129
-  The CLIP effect (+0.1129) lies OUTSIDE the GIST 95% CI -> GIST rules out a CLIP-sized gradient
-  TOST with bounds +/-0.1129: p_lower=0.0154  p_upper=0.0101  -> equivalence SUPPORTED
+  GIST gap -0.0058  95% CI [-0.0997, +0.0881]
+  CLIP gap +0.1129  -> OUTSIDE the GIST CI
+  TOST bounds +/-0.1129: p_lower=0.0154 p_upper=0.0101 -> EQUIVALENCE SUPPORTED
+  region x target interaction = +0.1187  t(7)=+3.015  p=0.020  7/8 same sign
 
 ====================================================================================================
-2x2 INTERACTION  (V1 vs S_ventral) x (CLIP vs GIST target), paired, n=8
+5. CEILING INFLATION, CLIP (naive minus split-half), sequence regions
 ====================================================================================================
-  interaction = +0.1187  t(7)=+3.015  p=1.95e-02  dz=+1.07  7/8 same sign
-  cell means:   V1  CLIP 0.835  GIST 0.889
-           S_ventral  CLIP 0.948  GIST 0.883
-
-SIMPLE EFFECTS of target within each region (GIST frac - CLIP frac), paired, n=8
-  V1             GIST-CLIP = +0.0544  t(7)= +1.83  p=0.1101  6/8 positive   GIST more shared
-  V2             GIST-CLIP = +0.0590  t(7)= +1.49  p=0.1796  6/8 positive   GIST more shared
-  hV4            GIST-CLIP = -0.0225  t(7)= -0.97  p=0.3623  3/8 positive   CLIP more shared
-  S_midventral   GIST-CLIP = -0.0467  t(7)= -1.88  p=0.1026  2/8 positive   CLIP more shared
-  S_ventral      GIST-CLIP = -0.0643  t(7)= -2.08  p=0.0759  2/8 positive   CLIP more shared
+  V1             ceiling 0.363 -> 0.282  (inflation +0.081)
+  V2             ceiling 0.369 -> 0.303  (inflation +0.066)
+  V3             ceiling 0.388 -> 0.347  (inflation +0.041)
+  hV4            ceiling 0.383 -> 0.322  (inflation +0.060)
+  S_midventral   ceiling 0.470 -> 0.441  (inflation +0.029)
+  S_ventral      ceiling 0.536 -> 0.488  (inflation +0.049)
 
 ====================================================================================================
-DOES 'SHARED FRACTION' TRACK 'HOW WELL THE TARGET SUITS THE REGION'?
-Within each target, across the 5 regions: corr(split-half ceiling, shared fraction)
+6. GIST POWER CHECK, sequence regions (two-way identification, chance 0.5)
 ====================================================================================================
-  CLIP: mean within-subject r = +0.449  (t(7)=+3.78 on Fisher z, p=0.0069)  8/8 positive
-  GIST: mean within-subject r = +0.026  (t(7)=+0.33 on Fisher z, p=0.7521)  4/8 positive
+  V1             CLIP id 0.793/0.749   GIST id 0.875/0.841   ceilings CLIP 0.282 GIST 0.525
+  V2             CLIP id 0.799/0.753   GIST id 0.865/0.833   ceilings CLIP 0.303 GIST 0.505
+  V3             CLIP id 0.819/0.782   GIST id 0.846/0.808   ceilings CLIP 0.347 GIST 0.443
+  hV4            CLIP id 0.802/0.765   GIST id 0.785/0.744   ceilings CLIP 0.322 GIST 0.380
+  S_midventral   CLIP id 0.856/0.823   GIST id 0.819/0.774   ceilings CLIP 0.441 GIST 0.426
+  S_ventral      CLIP id 0.917/0.903   GIST id 0.826/0.792   ceilings CLIP 0.488 GIST 0.440
 
-Pooled over BOTH targets: 10 region-x-target cells per participant
-  mean within-subject r = +0.034  t(7)=+0.38  p=7.18e-01  4/8 positive
-  per-subject r: [-0.321 -0.141  0.416  0.383  0.207  0.06  -0.124 -0.206]
+====================================================================================================
+7. NUMBERS THE MANUSCRIPT PROSE NEEDS
+====================================================================================================
+  voxel-matched subsample target per participant: 397--566
+  (manuscript currently says 397--566)
+  mean sd over the 3 random subsamples: 0.0105 (max 0.0184)
 
-====================================================================================================
-THE SAME, BUT WITH POSITION IN THE HIERARCHY INSTEAD OF TARGET FIT
-Pooled 10 cells: partial corr of frac with (a) ceiling controlling rank, (b) rank controlling ceiling
-====================================================================================================
-  frac ~ target-fit  | hierarchy rank: mean r=+0.021  t(7)=+0.24  p=0.8204  4/8 positive
-  frac ~ hierarchy rank | target-fit: mean r=+0.235  t(7)=+1.90  p=0.0993  5/8 positive
+  corrected CLIP range over 16 regions: 0.834 (V2) -- 0.959 (nsdgeneral)
+  corrected GIST range over 16 regions: 0.815 (S_midlateral) -- 0.974 (PHC)
+
+  wrote D:/Desktop/Memory_retention/RECONSTRUCTION_PILOT/results/step42_region_means.csv
+EARLY ['V1', 'V2', 'V3']  vs HIGH ['FFA', 'PPA', 'OPA', 'RSC', 'S_ventral']  (n=8 participants)
+==============================================================================
+  uncorrected      early=0.765 high=0.911 gap=+0.1461 t(7)=+12.55 p=4.70e-06 dz=+4.44 8/8
+  corrected CLIP   early=0.849 high=0.924 gap=+0.0749 t(7)= +4.29 p=3.63e-03 dz=+1.52 8/8
+  corrected GIST   early=0.885 high=0.876 gap=-0.0091 t(7)= -0.64 p=5.40e-01 dz=-0.23 4/8
+  voxel-matched    early=0.836 high=0.916 gap=+0.0803 t(7)= +4.91 p=1.73e-03 dz=+1.74 8/8
+
+  interaction (CLIP gap - GIST gap) = +0.0840  t(7)=+3.050  p=0.019  7/8 same sign
+
+GIST IS NOT A FLATTER MEASURE (16 regions)
+==============================================================================
+  CLIP: across-region range 0.834-0.959 span 0.125  sd 0.038
+  GIST: across-region range 0.815-0.974 span 0.159  sd 0.039
+  per-participant sd across regions: CLIP 0.0703 vs GIST 0.0905  t(7)=-1.177 p=0.278  2/8 CLIP larger
+  -> the GIST null is not reduced variance; it is variance that does not track the hierarchy

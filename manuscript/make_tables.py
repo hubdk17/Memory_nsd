@@ -45,31 +45,27 @@ def main() -> int:
     by_cat = pd.read_csv(RESULTS / "brain_embedding_loso_by_category.csv")
     trials = pd.read_csv(RESULTS / "brain_embedding_loso.csv")
     geom = pd.read_csv(RESULTS / "intersubject_mapping_breakdown_summary.csv")
+    # The primary estimate is the decoder-independent (split-half) one. The naive
+    # ratio in brain_embedding_loso_by_roi.csv shares a decoder between numerator
+    # and denominator and is retained only for comparison.
+    ctl = pd.read_csv(RESULTS / "decoder_controls_by_roi.csv")
+    ctl_subj = pd.read_csv(RESULTS / "decoder_controls_by_subject.csv")
 
-    ident = (trials.groupby(["roi", "subject_id"], observed=True)
-             [["ident_transfer", "ident_ceiling"]].first().reset_index()
-             .groupby("roi", observed=True)[["ident_transfer", "ident_ceiling"]]
-             .mean())
-
-    t1 = (by_roi.set_index("roi")
-          .join(ident)
+    t1 = (ctl.set_index("roi")
           .join(geom.set_index("roi")[["shared", "sem_shared",
                                        "p_shared_vs_one", "r_within"]])
-          .sort_values("frac_of_ceiling", ascending=False))
+          .sort_values("clip_frac", ascending=False))
 
     print("% ---------- TABLE 1 ----------")
     for roi, r in t1.iterrows():
         sh = "---" if pd.isna(r["shared"]) else n(r["shared"])
         shs = "---" if pd.isna(r["sem_shared"]) else n(r["sem_shared"])
-        print(f"{DISP[roi]:<19s} & {n(r['frac_of_ceiling'])} & {n(r['sem'])} & "
-              f"{n(r['ident_ceiling'])} & {n(r['ident_transfer'])} & "
+        print(f"{DISP[roi]:<19s} & {n(r['clip_frac'])} & {n(r['clip_frac_sem'])} & "
+              f"{n(r['clip_ident_ceiling'])} & {n(r['clip_ident_transfer'])} & "
               f"{sh} & {shs} & {p_fmt(r['p_shared_vs_one'])} \\\\")
 
     # ---- Table 2: paired contrast of every region against V1
-    wide = (trials.groupby(["roi", "subject_id"], observed=True)
-            [["transfer", "ceiling"]].mean().reset_index())
-    wide["frac"] = wide["transfer"] / wide["ceiling"]
-    w = wide.pivot(index="subject_id", columns="roi", values="frac")
+    w = ctl_subj.pivot(index="subject_id", columns="roi", values="clip_frac")
     rows = []
     for roi in t1.index:
         if roi == "V1":
@@ -110,17 +106,29 @@ def main() -> int:
         print(f"{DISP[roi]:<19s} & {n(r['r_within'], 4)} & "
               f"{n(r['r_between'], 4)} & {p_fmt(r['p_between_vs_zero'])} \\\\")
 
+    # ---- Table 5: the three controls, per region
+    print("\n% ---------- TABLE 5 ----------")
+    for roi, r in t1.iterrows():
+        print(f"{DISP[roi]:<19s} & {r['n_voxels']:.0f} & {n(r['naive_frac'])} & "
+              f"{n(r['clip_frac'])} & {n(r['gist_frac'])} & "
+              f"{n(r['voxmatched_frac'])} \\\\")
+
     # ---- inline numbers quoted in the running text
     print("\n% ---------- inline ----------")
     v1, sv = t1.loc["V1"], t1.loc["S_ventral"]
-    print(f"% V1 unshared     = {100 * (1 - v1['frac_of_ceiling']):.1f}%")
-    print(f"% ventral unshared= {100 * (1 - sv['frac_of_ceiling']):.1f}%")
-    print(f"% V1 ident gap    = {v1['ident_ceiling'] - v1['ident_transfer']:.3f}")
-    rho, prho = stats.spearmanr(t1["frac_of_ceiling"].loc[~t1["shared"].isna()],
-                                t1["shared"].dropna())
-    rr, pr = stats.pearsonr(t1["frac_of_ceiling"].loc[~t1["shared"].isna()],
-                            t1["shared"].dropna())
-    print(f"% cross-method rho={rho:.3f} p={prho:.3f}  r={rr:.3f} p={pr:.3f}")
+    print(f"% V1 unshared     = {100 * (1 - v1['clip_frac']):.1f}%")
+    print(f"% ventral unshared= {100 * (1 - sv['clip_frac']):.1f}%")
+    print(f"% V1 ident gap    = {v1['clip_ident_ceiling'] - v1['clip_ident_transfer']:.3f}")
+    for lab, col in (("naive", "frac_of_ceiling"), ("corrected", "clip_frac"),
+                     ("gist", "gist_frac")):
+        src = by_roi.set_index("roi") if col == "frac_of_ceiling" else t1
+        j = src[[col]].join(geom.set_index("roi")[["shared"]]).dropna()
+        rho, prho = stats.spearmanr(j[col], j["shared"])
+        rr, pr = stats.pearsonr(j[col], j["shared"])
+        jx = j.drop(index="PHC")
+        rho2, prho2 = stats.spearmanr(jx[col], jx["shared"])
+        print(f"% cross-method [{lab}] rho={rho:.3f} p={prho:.3f}  r={rr:.3f} "
+              f"p={pr:.3f}  | ex-PHC rho={rho2:.3f} p={prho2:.4f}")
     print(f"% span ratio V1/ventral = "
           f"{(g.loc['V1'].max() - g.loc['V1'].min()) / (g.loc['S_ventral'].max() - g.loc['S_ventral'].min()):.2f}")
     return 0
