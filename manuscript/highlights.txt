@@ -1,0 +1,5 @@
+Shared visual representation rises from V1 to ventral stream for semantic features
+The same voxels show no such gradient for low-level (GIST) features
+A decoder-independent noise ceiling halves the apparent effect size
+Matching regions for voxel count leaves the semantic gradient intact
+Where representation is individual depends on the feature space measured

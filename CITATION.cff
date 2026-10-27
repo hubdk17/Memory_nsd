@@ -1,0 +1,50 @@
+cff-version: 1.2.0
+message: >-
+  If you use this code, these result tables, or these figures, please cite the
+  work below. Attribution is a condition of the CC BY 4.0 licence.
+title: >-
+  Shared visual representation increases along the ventral hierarchy for semantic
+  but not low-level features
+abstract: >-
+  Analysis code, derived result tables and manuscript source for a study of
+  individual differences in visual cortical representation in the Natural Scenes
+  Dataset. Per-participant decoders map voxels into a common feature space and
+  are evaluated against a noise ceiling built from two decoders trained on
+  disjoint halves of each participant's images. The shared fraction rises along
+  the ventral hierarchy for a semantic target and is absent for a low-level
+  target in the same voxels. No Natural Scenes Dataset data is redistributed.
+type: software
+authors:
+  - family-names: Kaila
+    given-names: Daksh
+    affiliation: Thapar Institute of Engineering and Technology, Patiala, Punjab, India
+    email: dkaila_be25@thapar.edu
+  - family-names: Aggarwal
+    given-names: Monika
+    affiliation: Indian Institute of Technology Delhi, New Delhi, India
+repository-code: https://github.com/hubdk17/Memory_nsd
+license: CC-BY-4.0
+year: 2026
+keywords:
+  - individual differences
+  - inter-subject decoding
+  - Natural Scenes Dataset
+  - representational similarity analysis
+  - visual cortex
+  - noise ceiling
+preferred-citation:
+  type: unpublished
+  title: >-
+    Shared visual representation increases along the ventral hierarchy for
+    semantic but not low-level features
+  authors:
+    - family-names: Kaila
+      given-names: Daksh
+      affiliation: Thapar Institute of Engineering and Technology, Patiala, Punjab, India
+      email: dkaila_be25@thapar.edu
+    - family-names: Aggarwal
+      given-names: Monika
+      affiliation: Indian Institute of Technology Delhi, New Delhi, India
+  year: 2026
+  notes: Manuscript in preparation
+  url: https://github.com/hubdk17/Memory_nsd

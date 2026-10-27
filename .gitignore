@@ -1,0 +1,40 @@
+# ---------------------------------------------------------------------------
+# Natural Scenes Dataset material is NOT redistributed in this repository.
+# NSD is obtained separately from https://naturalscenesdataset.org under its
+# own terms of use. Keep these patterns in place.
+# ---------------------------------------------------------------------------
+data/
+roi_betas_full/
+nsd_stimuli_256/
+_tmp_sessions/
+*.npz
+*.npy
+*.nii
+*.nii.gz
+*.hdf5
+*.h5
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.toc
+main.pdf
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
